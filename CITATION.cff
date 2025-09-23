@@ -2,42 +2,79 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 title: PyPSA-Earth. A new global open energy system optimization model demonstrated in Africa
-abstract: This repository contains the source code of the paper PyPSA-Earth. A new global open energy system optimization model demonstrated in Africa by Maximilian Parzen, Hazem Abdel-Khalek, Ekaterina Fedotova, Matin Mahmood, Martha Maria Frysztacki, Johannes Hampp, Lukas Franken, Leon Schumm, Fabian Neumann, Davide Poli, Aristides Kiprakis and Davide Fioriti, from Applied Energy
-doi: 10.1016/j.apenergy.2023.121096
+abstract: This repository contains the source code for PyPSA-Earth, a global open energy system optimization model that supports both power-only and sector-coupled modeling capabilities.
 repository-code: https://github.com/pypsa-meets-earth/pypsa-earth
 version: 1.0.0
 date-released: 2023-04-18
-message: If you use this software in your work, please cite it using the following metadata.
-authors:
-  - given-names: Maximilian
-    family-names: Parzen
-    orcid: https://orcid.org/0000-0002-4390-0063
-  - given-names: Hazem
-    family-names: Abdel-Khalek
-  - given-names: Ekaterina
-    family-names: Fedotova
-    orcid: https://orcid.org/0000-0002-5590-9591
-  - given-names: Matin
-    family-names: Mahmood
-  - given-names: Martha Maria
-    family-names: Frysztacki
-    orcid: https://orcid.org/0000-0002-0788-1328
-  - given-names: Johannes
-    family-names: Hampp
-    orcid: https://orcid.org/0000-0002-1776-116X
-  - given-names: Lukas
-    family-names: Franken
-  - given-names: Leon
-    family-names: Schumm
-  - given-names: Fabian
-    family-names: Neumann
-    orcid: https://orcid.org/0000-0002-6604-5450
-  - given-names: Davide
-    family-names: Poli
-    orcid: https://orcid.org/0000-0002-5045-9034
-  - given-names: Aristides
-    family-names: Kiprakis
-  - given-names: Davide
-    family-names: Fioriti
-    orcid: https://orcid.org/0000-0001-5491-7912
+message: If you use this software in your work, please cite the relevant paper(s) using the following metadata.
+preferred-citation:
+  type: article
+  title: PyPSA-Earth. A new global open energy system optimization model demonstrated in Africa
+  authors:
+    - given-names: Maximilian
+      family-names: Parzen
+      orcid: https://orcid.org/0000-0002-4390-0063
+    - given-names: Hazem
+      family-names: Abdel-Khalek
+    - given-names: Ekaterina
+      family-names: Fedotova
+      orcid: https://orcid.org/0000-0002-5590-9591
+    - given-names: Matin
+      family-names: Mahmood
+    - given-names: Martha Maria
+      family-names: Frysztacki
+      orcid: https://orcid.org/0000-0002-0788-1328
+    - given-names: Johannes
+      family-names: Hampp
+      orcid: https://orcid.org/0000-0002-1776-116X
+    - given-names: Lukas
+      family-names: Franken
+    - given-names: Leon
+      family-names: Schumm
+    - given-names: Fabian
+      family-names: Neumann
+      orcid: https://orcid.org/0000-0002-6604-5450
+    - given-names: Davide
+      family-names: Poli
+      orcid: https://orcid.org/0000-0002-5045-9034
+    - given-names: Aristides
+      family-names: Kiprakis
+    - given-names: Davide
+      family-names: Fioriti
+      orcid: https://orcid.org/0000-0001-5491-7912
+  journal: Applied Energy
+  doi: 10.1016/j.apenergy.2023.121096
+  year: 2023
+references:
+  - type: article
+    title: PyPSA-Earth sector-coupled. A global open-source multi-energy system model showcased for hydrogen applications in countries of the Global South
+    authors:
+      - given-names: Hazem
+        family-names: Abdel-Khalek
+      - given-names: Leon
+        family-names: Schumm
+      - given-names: Eddy
+        family-names: Jalbout
+      - given-names: Maximilian
+        family-names: Parzen
+        orcid: https://orcid.org/0000-0002-4390-0063
+      - given-names: Caspar
+        family-names: Schauß
+      - given-names: Davide
+        family-names: Fioriti
+        orcid: https://orcid.org/0000-0001-5491-7912
+    journal: Applied Energy
+    volume: 383
+    year: 2025
+    pages: 125316
+    doi: 10.1016/j.apenergy.2025.125316
+    url: https://www.sciencedirect.com/science/article/pii/S0306261925000467
+    abstract: This study presents sector-coupled PyPSA-Earth. a novel global open-source energy system optimization model that incorporates major demand sectors and energy carriers in high spatial and temporal resolution, to enable energy transition studies worldwide. The model includes a workflow that automatically downloads and processes the necessary demand, supply and transmission data to co-optimize investment and operation of energy systems of countries or regions of Earth. The workflow provides the user with tools to forecast future demand scenarios and allows for custom user-defined data in several aspects. Sector-coupled PyPSA-Earth introduces novelty by offering users a comprehensive methodology to generate readily available sector-coupled data and model of any region worldwide, starting from raw and open data sources. The model provides flexibility in terms of spatial and temporal detail, allowing the user to tailor it to their specific needs. The capabilities of the model are demonstrated through two showcases for Egypt and Brazil. The Egypt case quantifies the relevant role of PV, exceeding 35 GW, and electrolysis in Suez and Damietta regions, for meeting 16% of the EU hydrogen demand. Complementarily, the Brazil case confirms the model's ability in handling hydrogen planning infrastructure, including repurposing of existing gas networks which results in 146 M€ lower costs than building new pipelines. The results prove the suitability of sector-coupled PyPSA-Earth to meet the needs of policymakers, developers, and scholars in advancing the energy transition. The authors invite the interested individuals and institutions to collaborate in the future developments of the model within PyPSA meets Earth initiative.
+    keywords:
+      - PyPSA-earth
+      - Energy system modelling
+      - Sector-coupling
+      - Energy infrastructure
+      - Hydrogen export
+      - Hydrogen policies
 cff-version: 1.2.0

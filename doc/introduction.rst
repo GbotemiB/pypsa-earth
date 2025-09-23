@@ -14,16 +14,38 @@ A short video explaining the logic of PyPSA-Eur which is similar to PyPSA-Earth:
 
     <iframe width="832" height="468" src="https://www.youtube.com/embed/ty47YU1_eeQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-For more details on PyPSA-Earth read the below milestone paper.
+For more details on PyPSA-Earth read the below milestone papers.
+
+**For the power-only model**, please cite:
+Parzen et al., "PyPSA-Earth. A new global open energy system optimization model demonstrated in Africa", Applied Energy, 2023.
+
+**For the sector-coupled model**, please cite:
+Abdel-Khalek et al., "PyPSA-Earth sector-coupled: A global open-source multi-energy system model showcased for hydrogen applications in countries of the Global South", Applied Energy, 2025.
+
 For citations, please use the following BibTeX: ::
 
-  @misc{PyPSAEarth,
-  author = {Parzen, Maximilian and Abdel-Khalek, Hazem and Fedorova, Ekaterina and Mahmood, Matin and Frysztacki, Martha Maria and Hampp, Johannes and Franken, Lukas and Schumm, Leon and Neumann, Fabian and Poli, Davide and Kiprakis, Aristides and Fioriti, Davide},
+  @article{PyPSAEarth2023,
+  author = {Maximilian Parzen and Hazem Abdel-Khalek and Ekaterina Fedotova and Matin Mahmood and Martha Maria Frysztacki and Johannes Hampp and Lukas Franken and Leon Schumm and Fabian Neumann and Davide Poli and Aristides Kiprakis and Davide Fioriti},
   title = {PyPSA-Earth. A new global open energy system optimization model demonstrated in Africa},
-  publisher = {Applied Energy},
+  journal = {Applied Energy},
+  volume = {341},
+  pages = {121096},
   year = {2023},
-  url = {https://www.sciencedirect.com/science/article/pii/S030626192300460},
+  issn = {0306-2619},
   doi = {https://doi.org/10.1016/j.apenergy.2023.121096},
+  url = {https://www.sciencedirect.com/science/article/pii/S0306261923004609},
+  }
+
+  @article{PyPSAEarthSector2025,
+  author = {Hazem Abdel-Khalek and Leon Schumm and Eddy Jalbout and Maximilian Parzen and Caspar Schauß and Davide Fioriti},
+  title = {PyPSA-Earth sector-coupled: A global open-source multi-energy system model showcased for hydrogen applications in countries of the Global South},
+  journal = {Applied Energy},
+  volume = {383},
+  pages = {125316},
+  year = {2025},
+  issn = {0306-2619},
+  doi = {https://doi.org/10.1016/j.apenergy.2025.125316},
+  url = {https://www.sciencedirect.com/science/article/pii/S0306261925000467},
   }
 
 

@@ -27,7 +27,14 @@ Video
 Publications:
 -------------
 
+**Power-only model:**
+
 Parzen et al., "PyPSA-Earth. A new global open energy system optimization model demonstrated in Africa", 2023, https://doi.org/10.1016/j.apenergy.2023.121096.
+
+**Sector-coupled model:**
+
+Abdel-Khalek et al., "PyPSA-Earth sector-coupled: A global open-source multi-energy system model showcased for hydrogen applications in countries of the Global South", 2025, https://doi.org/10.1016/j.apenergy.2025.125316.
+
 Please use the following BibTeX: ::
 
   @article{PyPSAEarth2023,
@@ -41,6 +48,19 @@ Please use the following BibTeX: ::
   doi = {https://doi.org/10.1016/j.apenergy.2023.121096},
   url = {https://www.sciencedirect.com/science/article/pii/S0306261923004609},
   keywords = {Macro-energy systems, Optimization, OpenStreetMap, PyPSA-Earth, PyPSA-Africa, PyPSA meets Earth},
+  }
+
+  @article{PyPSAEarthSector2025,
+  author = {Hazem Abdel-Khalek and Leon Schumm and Eddy Jalbout and Maximilian Parzen and Caspar Schauß and Davide Fioriti},
+  title = {PyPSA-Earth sector-coupled: A global open-source multi-energy system model showcased for hydrogen applications in countries of the Global South},
+  journal = {Applied Energy},
+  volume = {383},
+  pages = {125316},
+  year = {2025},
+  issn = {0306-2619},
+  doi = {https://doi.org/10.1016/j.apenergy.2025.125316},
+  url = {https://www.sciencedirect.com/science/article/pii/S0306261925000467},
+  keywords = {PyPSA-earth, Energy system modelling, Sector-coupling, Energy infrastructure, Hydrogen export, Hydrogen policies},
   }
 
 .. _PyPSA_Eur:
