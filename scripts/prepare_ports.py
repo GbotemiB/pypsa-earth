@@ -15,7 +15,7 @@ from _helpers import BASE_DIR
 # from _helpers import configure_logging
 
 
-# logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def download_ports():
@@ -28,7 +28,17 @@ def download_ports():
     as a csv file that is updated monthly as mentioned on the webpage. The dataset contains 3711 ports.
     """
     fn = "https://msi.nga.mil/api/publications/download?type=view&key=16920959/SFH00000/UpdatedPub150.csv"
-    wpi_csv = pd.read_csv(fn, index_col=0)
+    storage_options = {"User-Agent": "Mozilla/5.0"}
+
+    try:
+        wpi_csv = pd.read_csv(fn, index_col=0, storage_options=storage_options)
+        logger.info("Port data downloaded successfully.")
+    except Exception as e:
+        logger.warning(
+            f"Failed to download port data: {e}.\nFalling back to local copy."
+        )
+        fallback_fn = os.path.join(BASE_DIR, "data/temp_hard_coded/WPI_ports.csv")
+        wpi_csv = pd.read_csv(fallback_fn, index_col=0)
 
     return wpi_csv
 

@@ -58,10 +58,10 @@ def download_number_of_vehicles():
         vehicles_gho = pd.read_csv(
             url, storage_options=storage_options, encoding="utf8"
         )
-        print("File read successfully.")
+        logger.info("WHO GHO vehicles data downloaded successfully.")
     except Exception as e:
         logger.warning(
-            f"Failed to read the file. Falling back on hard-coded data. \nError: {e}"
+            f"Failed to download WHO GHO vehicles data: {e}.\nFalling back to hard-coded data."
         )
         return pd.DataFrame()
 
@@ -85,9 +85,9 @@ def download_number_of_vehicles():
         vehicles_wiki = pd.read_html(
             url, storage_options=storage_options, encoding="utf8"
         )[0]
-        print("File read successfully.")
+        logger.info("Wikipedia vehicles data downloaded successfully.")
     except Exception as e:
-        logger.warning("Failed to read the file.", e)
+        logger.warning(f"Failed to download Wikipedia vehicles data: {e}.")
         vehicles_wiki = pd.DataFrame(columns=["Country", "country", "number cars"])
 
     vehicles_wiki.rename(
@@ -127,9 +127,11 @@ def download_CO2_emissions():
     # Read the 'Data' sheet directly from the Excel file at the provided URL
     try:
         CO2_emissions = pd.read_excel(url, sheet_name="Data", skiprows=[0, 1, 2])
-        print("File read successfully.")
+        logger.info("World Bank CO2 emissions data downloaded successfully.")
     except Exception as e:
-        logger.warning("Failed to read the file. Falling back on hard-coded data:", e)
+        logger.warning(
+            f"Failed to download World Bank CO2 emissions data: {e}.\nFalling back to hard-coded data."
+        )
         return pd.DataFrame()
 
     CO2_emissions = CO2_emissions[
