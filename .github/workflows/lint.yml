@@ -1,0 +1,108 @@
+# SPDX-FileCopyrightText:  PyPSA-Earth and PyPSA-Eur Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: Lint
+
+on:
+  pull_request:
+    branches:
+    - main
+    paths:
+    - "**/*.py"
+    - "**/*.smk"
+    - "**/*.yaml"
+    - "**/*.yml"
+    - ".pre-commit-config.yaml"
+    - "pyproject.toml"
+
+# Cancel any in-progress runs when a new run is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    name: Pre-commit checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Run pre-commit
+      uses: pre-commit/action@v3.0.1
+
+  docstring-coverage:
+    name: Docstring coverage
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install interrogate
+      run: pip install interrogate
+
+    - name: Check docstring coverage
+      # Baseline: 54.3% (as of April 2026). Raise --fail-under as coverage improves.
+      run: |
+        interrogate scripts/ \
+          --ignore-init-method \
+          --ignore-magic \
+          --ignore-module \
+          --fail-under 54 \
+          --verbose
+      continue-on-error: true
+
+    - name: Post coverage to step summary
+      if: always()
+      run: |
+        echo "### Docstring Coverage" >> "$GITHUB_STEP_SUMMARY"
+        interrogate scripts/ \
+          --ignore-init-method \
+          --ignore-magic \
+          --ignore-module \
+          --fail-under 0 \
+          --badge-style flat \
+          --generate-badge . 2>&1 | tail -5 >> "$GITHUB_STEP_SUMMARY" || true
+
+  type-check:
+    name: Type checking
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install mypy
+      run: pip install mypy
+
+    - name: Run mypy
+      # Non-enforcing until type hints are more complete.
+      run: |
+        mypy scripts/ \
+          --ignore-missing-imports \
+          --no-strict-optional \
+          --no-error-summary \
+          2>&1 | tee mypy-output.txt || true
+
+    - name: Post type check summary
+      if: always()
+      run: |
+        echo "### Mypy Type Check" >> "$GITHUB_STEP_SUMMARY"
+        echo '```' >> "$GITHUB_STEP_SUMMARY"
+        tail -5 mypy-output.txt >> "$GITHUB_STEP_SUMMARY"
+        echo '```' >> "$GITHUB_STEP_SUMMARY"
