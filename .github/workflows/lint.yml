@@ -27,10 +27,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.11"
 
@@ -42,10 +42,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.11"
 
@@ -68,8 +68,8 @@ jobs:
       if: always()
       run: |
         RESULT=$(grep "RESULT:" interrogate-output.txt || echo "RESULT: unknown")
-        ACTUAL=$(echo "$RESULT" | grep -oP 'actual: \K[0-9.]+' || echo "N/A")
-        MINIMUM=$(echo "$RESULT" | grep -oP 'minimum: \K[0-9.]+' || echo "54.0")
+        ACTUAL=$(echo "$RESULT" | sed 's/.*actual: \([0-9.]*\).*/\1/')
+        MINIMUM=$(echo "$RESULT" | sed 's/.*minimum: \([0-9.]*\).*/\1/')
 
         if echo "$RESULT" | grep -q "PASSED"; then
           STATUS="✅ PASSED"
@@ -92,10 +92,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.11"
 
