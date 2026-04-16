@@ -88,7 +88,7 @@ jobs:
         python-version: "3.11"
 
     - name: Install mypy
-      run: pip install mypy
+      run: pip install mypy types-PyYAML types-requests types-pytz
 
     - name: Run mypy
       # Non-enforcing until type hints are more complete.
