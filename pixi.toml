@@ -79,8 +79,5 @@ rich = "*"
 currencyconverter = "*"
 googledrivedownloader = ">=1.1"
 
-[environments]
-pypsa-earth = ["default"]
-
 [tasks]
-install-kernel = "ipython kernel install --user --name=pypsa-earth -e pypsa-earth"
+install-kernel = "ipython kernel install --user --name=pypsa-earth"
