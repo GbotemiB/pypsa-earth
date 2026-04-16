@@ -60,20 +60,32 @@ jobs:
           --ignore-magic \
           --ignore-module \
           --fail-under 54 \
-          --verbose
+          --verbose 2>&1 | tee interrogate-output.txt
+        exit ${PIPESTATUS[0]}
       continue-on-error: true
 
     - name: Post coverage to step summary
       if: always()
       run: |
-        echo "### Docstring Coverage" >> "$GITHUB_STEP_SUMMARY"
-        interrogate scripts/ \
-          --ignore-init-method \
-          --ignore-magic \
-          --ignore-module \
-          --fail-under 0 \
-          --badge-style flat \
-          --generate-badge . 2>&1 | tail -5 >> "$GITHUB_STEP_SUMMARY" || true
+        RESULT=$(grep "RESULT:" interrogate-output.txt || echo "RESULT: unknown")
+        ACTUAL=$(echo "$RESULT" | grep -oP 'actual: \K[0-9.]+' || echo "N/A")
+        MINIMUM=$(echo "$RESULT" | grep -oP 'minimum: \K[0-9.]+' || echo "54.0")
+
+        if echo "$RESULT" | grep -q "PASSED"; then
+          STATUS="✅ PASSED"
+        else
+          STATUS="❌ FAILED"
+        fi
+
+        {
+          echo "### Docstring Coverage"
+          echo ""
+          echo "| | Value |"
+          echo "|---|---|"
+          echo "| Status | $STATUS |"
+          echo "| Coverage | ${ACTUAL}% |"
+          echo "| Minimum | ${MINIMUM}% |"
+        } >> "$GITHUB_STEP_SUMMARY"
 
   type-check:
     name: Type checking
@@ -96,13 +108,34 @@ jobs:
         mypy scripts/ \
           --ignore-missing-imports \
           --no-strict-optional \
-          --no-error-summary \
           2>&1 | tee mypy-output.txt || true
 
     - name: Post type check summary
       if: always()
       run: |
-        echo "### Mypy Type Check" >> "$GITHUB_STEP_SUMMARY"
-        echo '```' >> "$GITHUB_STEP_SUMMARY"
-        tail -5 mypy-output.txt >> "$GITHUB_STEP_SUMMARY"
-        echo '```' >> "$GITHUB_STEP_SUMMARY"
+        SUMMARY=$(grep "^Found" mypy-output.txt || echo "")
+
+        if [ -z "$SUMMARY" ]; then
+          ERRORS=0
+          FILES=0
+          CHECKED=0
+          STATUS="✅ No errors"
+        else
+          ERRORS=$(echo "$SUMMARY" | sed 's/Found \([0-9]*\).*/\1/')
+          FILES=$(echo "$SUMMARY" | sed 's/.*in \([0-9]*\) file.*/\1/')
+          CHECKED=$(echo "$SUMMARY" | sed 's/.*(checked \([0-9]*\).*/\1/')
+          STATUS="❌ Errors found"
+        fi
+
+        {
+          echo "### Mypy Type Check"
+          echo ""
+          echo "| | Value |"
+          echo "|---|---|"
+          echo "| Status | $STATUS |"
+          echo "| Errors | ${ERRORS} |"
+          echo "| Files with errors | ${FILES} |"
+          echo "| Files checked | ${CHECKED:-0} |"
+          echo ""
+          echo "> Full error details are in the job logs."
+        } >> "$GITHUB_STEP_SUMMARY"
