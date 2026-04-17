@@ -183,6 +183,7 @@ Follow the [pixi installation guide](https://pixi.prefix.dev/latest/#installatio
 
 === "Windows"
 
+    Use the installer available in the [pixi installation guide](https://pixi.prefix.dev/latest/#__tabbed_1_2) or execute the following in the powershell:
     ```powershell
     iwr -useb https://pixi.sh/install.ps1 | iex
     ```
