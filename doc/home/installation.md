@@ -169,7 +169,7 @@ snakemake --version
 
 ## Installation with pixi (Alternative)
 
-[pixi](https://pixi.prefix.dev/latest/) is a modern, fast package manager built on the conda ecosystem. It is fully compatible with conda-forge packages and offers faster installs, a single cross-platform lock file (`pixi.lock`), and no need to manage separate conda environments manually.
+[pixi](https://pixi.prefix.dev/latest/) is a modern, fast package manager built on the conda ecosystem. It offers faster installation using a single cross-platform lock file (`pixi.lock`).
 
 ### Install pixi
 
