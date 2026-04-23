@@ -211,31 +211,54 @@ pixi install
 
 This typically completes in a few minutes and creates a local `.pixi/` environment — no global environment management required.
 
+### Enable Prompt Indicator (Recommended)
+
+By default pixi does not modify your terminal prompt. Enable it once globally so your prompt shows the active environment — similar to conda:
+
+```bash
+pixi config set shell.change-ps1 true --global
+```
+
+After this, `pixi shell` will show `(pypsa-earth)` in your prompt:
+
+```
+(pypsa-earth) user@machine ~/pypsa-earth $
+```
+
+To check if you are inside a pixi shell at any time:
+
+```bash
+echo $PIXI_IN_SHELL   # prints 1 if inside, empty if not
+```
+
 ### Run Commands
 
-Instead of activating an environment, prefix commands with `pixi run`:
+There are two ways to use the environment:
+
+**Option 1 — `pixi shell` (interactive use, closest to conda):**
 
 ```bash
-pixi run -e pypsa-earth snakemake --version
+pixi shell            # enter the environment
+snakemake --version   # run commands normally, no prefix needed
+exit                  # leave the environment (never use conda deactivate)
 ```
 
-Or open an interactive shell inside the environment:
+**Option 2 — `pixi run` (scripts and CI):**
 
 ```bash
-pixi shell -e pypsa-earth
+pixi run snakemake --version   # run a single command inside the environment
+pixi run make test
 ```
-
-To exit the shell, type `exit` or press `Ctrl+D`.
 
 ### Remove the Environment
 
 To remove the installed environment (e.g. to free up disk space or reinstall cleanly):
 
 ```bash
-pixi clean -e pypsa-earth
+pixi clean
 ```
 
-This deletes `.pixi/envs/pypsa-earth/` but keeps `pixi.toml` and `pixi.lock` intact. To reinstall:
+This deletes `.pixi/envs/` but keeps `pixi.toml` and `pixi.lock` intact. To reinstall:
 
 ```bash
 pixi install
