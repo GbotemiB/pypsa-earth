@@ -47,5 +47,6 @@ jobs:
     - name: Check spelling
       uses: codespell-project/actions-codespell@v2
       with:
+        # Ignore list mirrors .pre-commit-config.yaml codespell hook to keep both in sync
         ignore_words_list: fom,appartment,bage,ore,setis,tabacco,berfore,fo,FO,vor
         path: doc

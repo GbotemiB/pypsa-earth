@@ -41,8 +41,14 @@ jobs:
     name: Docstring coverage
     runs-on: ubuntu-latest
 
+    env:
+      # Baseline: 54.3% (as of April 2026). Raise as coverage improves.
+      DOCSTRING_MIN_COVERAGE: 54
+
     steps:
     - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
 
     - name: Set up Python
       uses: actions/setup-python@v6
@@ -52,17 +58,27 @@ jobs:
     - name: Install interrogate
       run: pip install interrogate
 
-    - name: Check docstring coverage
-      # Baseline: 54.3% (as of April 2026). Raise --fail-under as coverage improves.
+    - name: Check docstring coverage on PR branch
       run: |
         interrogate scripts/ \
           --ignore-init-method \
           --ignore-magic \
           --ignore-module \
-          --fail-under 54 \
+          --fail-under ${{ env.DOCSTRING_MIN_COVERAGE }} \
           --verbose 2>&1 | tee interrogate-output.txt
         exit ${PIPESTATUS[0]}
       continue-on-error: true
+
+    - name: Check docstring coverage on main
+      run: |
+        git checkout origin/main -- scripts/
+        interrogate scripts/ \
+          --ignore-init-method \
+          --ignore-magic \
+          --ignore-module \
+          --fail-under 0 \
+          --verbose 2>&1 | tee interrogate-main.txt || true
+        git checkout HEAD -- scripts/
 
     - name: Post coverage to step summary
       if: always()
@@ -70,6 +86,15 @@ jobs:
         RESULT=$(grep "RESULT:" interrogate-output.txt || echo "RESULT: unknown")
         ACTUAL=$(echo "$RESULT" | sed 's/.*actual: \([0-9.]*\).*/\1/')
         MINIMUM=$(echo "$RESULT" | sed 's/.*minimum: \([0-9.]*\).*/\1/')
+
+        RESULT_MAIN=$(grep "RESULT:" interrogate-main.txt || echo "RESULT: unknown")
+        MAIN=$(echo "$RESULT_MAIN" | sed 's/.*actual: \([0-9.]*\).*/\1/')
+
+        if [ -n "$ACTUAL" ] && [ -n "$MAIN" ]; then
+          DELTA=$(awk -v a="$ACTUAL" -v b="$MAIN" 'BEGIN { diff = a - b; printf "%+.1f", diff }')
+        else
+          DELTA="N/A"
+        fi
 
         if echo "$RESULT" | grep -q "PASSED"; then
           STATUS="✅ PASSED"
@@ -83,7 +108,9 @@ jobs:
           echo "| | Value |"
           echo "|---|---|"
           echo "| Status | $STATUS |"
-          echo "| Coverage | ${ACTUAL}% |"
+          echo "| Coverage (this PR) | ${ACTUAL}% |"
+          echo "| Coverage (main) | ${MAIN}% |"
+          echo "| Change | ${DELTA}% |"
           echo "| Acceptable Minimum | ${MINIMUM}% |"
         } >> "$GITHUB_STEP_SUMMARY"
 
