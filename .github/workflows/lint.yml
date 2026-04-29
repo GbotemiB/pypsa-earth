@@ -137,5 +137,5 @@ jobs:
           echo "| Files with errors | ${FILES} |"
           echo "| Files checked | ${CHECKED:-0} |"
           echo ""
-          echo "> Full error details are in the job logs."
+          echo "> Full error details are in Type checking job logs."
         } >> "$GITHUB_STEP_SUMMARY"
