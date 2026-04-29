@@ -84,7 +84,7 @@ jobs:
           echo "|---|---|"
           echo "| Status | $STATUS |"
           echo "| Coverage | ${ACTUAL}% |"
-          echo "| Minimum | ${MINIMUM}% |"
+          echo "| Acceptable Minimum | ${MINIMUM}% |"
         } >> "$GITHUB_STEP_SUMMARY"
 
   type-check:
